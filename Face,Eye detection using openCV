@@ -1,0 +1,57 @@
+##FACE DETECTION
+import cv2
+import numpy as np
+
+image=cv2.imread('e.png')
+
+face_classifier=cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+
+pic=cv2.imshow("trump",image)
+cv2.waitKey()
+cv2.destroyAllWindows()
+
+grey=cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
+
+face=face_classifier.detectMultiScale(grey,1.3,5)
+
+if len(face)==0:
+    print("No face found")
+
+for(x,y,w,h) in face:
+    cv2.rectangle(image,(x,y),(x+w,y+h),(0,255,0),3)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+##EYE DETECTION
+image=cv2.imread('Trump.jpg')
+
+
+face_classifier=cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+eye_classifier=cv2.CascadeClassifier('haarcascade_eye.xml')
+
+
+grey=cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
+
+face=face_classifier.detectMultiScale(grey,1.3,5)
+
+if len(face)==0:
+    print("No face found")
+
+for(x,y,w,h) in face:
+    cv2.rectangle(image,(x,y),(x+w,y+h),(0,255,0),3)
+    cv2.imshow('img',image)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+##r_grey = grey[y:y+w, x:x+h]: This line extracts a region of interest (ROI) from the grayscale image (grey). 
+##The ROI is defined by the rectangle with coordinates (x, y) as the top-left corner and dimensions (w, h) representing width and height.
+##his line extracts the corresponding region of interest from the color image (image).
+##It captures the same rectangular area defined by (x, y, w, h).
+r_grey=grey[y:y+w,x:x+h]
+s_color=image[y:y+w,x:x+h]
+eye=eye_classifier.detectMultiScale(r_grey)
+for(ex,ey,ew,eh) in face:
+    cv2.rectangle(r_grey,(ex,ey),(ex+w,ey+eh),(0,255,0),3)
+    cv2.imshow('img',image)
+    cv2.waitKey(0)
+    
+cv2.destroyAllWindows()
